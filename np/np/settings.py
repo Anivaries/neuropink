@@ -112,24 +112,42 @@ STATIC_ROOT = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {
-#         "file": {
-#             "level": "DEBUG",
-#             "class": "logging.FileHandler",
-#             "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
-#         },
-#         "console": {
-#             "class": "logging.StreamHandler",
-#         },
-#     },
-#     "loggers": {
-#         "django": {
-#             "handlers": ["file", "console"],
-#             "level": "DEBUG",
-#             "propagate": True,
-#         },
-#     },
-# }
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "ERROR",
+        },
+    },
+
+    "loggers": {
+        # Main Django logger → log only errors
+        "django": {
+            "handlers": ["file", "console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+
+        # Silence SQL queries
+        "django.db.backends": {
+            "handlers": [],
+            "level": "WARNING",  # WARNING prevents SQL DEBUG logging
+            "propagate": False,
+        },
+
+        # Log only errors from requests (404, 500)
+        "django.request": {
+            "handlers": ["file", "console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}
