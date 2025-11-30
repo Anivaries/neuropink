@@ -14,6 +14,7 @@ SECRET_KEY = 'django-insecure-fbgln&_arnkv2dxez-b&=2v7y&rz22d@p+$9d1r0l6yk+6$u7c
 DEBUG = False
 
 ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
+# ALLOWED_HOSTS = ['*']
 
 ADMINS = [('Marko', 'k0m4r4c00@gmail.com')]
 # Application definition
@@ -111,24 +112,24 @@ STATIC_ROOT = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
-        },
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file", "console"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "file": {
+#             "level": "DEBUG",
+#             "class": "logging.FileHandler",
+#             "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
+#         },
+#         "console": {
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["file", "console"],
+#             "level": "DEBUG",
+#             "propagate": True,
+#         },
+#     },
+# }
