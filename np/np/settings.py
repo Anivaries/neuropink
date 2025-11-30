@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fbgln&_arnkv2dxez-b&=2v7y&rz22d@p+$9d1r0l6yk+6$u7c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
 # ALLOWED_HOSTS = ['*']
@@ -112,42 +112,42 @@ STATIC_ROOT = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
+#LOGGING = {
+#    "version": 1,
+#    "disable_existing_loggers": False,
 
-    "handlers": {
-        "file": {
-            "level": "ERROR",
-            "class": "logging.FileHandler",
-            "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
-        },
-        "console": {
-            "class": "logging.StreamHandler",
-            "level": "ERROR",
-        },
-    },
+#    "handlers": {
+#        "file": {
+#            "level": "ERROR",
+#            "class": "logging.FileHandler",
+#            "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
+#        },
+#        "console": {
+#            "class": "logging.StreamHandler",
+#            "level": "ERROR",
+#        },
+#    },
 
-    "loggers": {
+ #   "loggers": {
         # Main Django logger → log only errors
-        "django": {
-            "handlers": ["file", "console"],
-            "level": "ERROR",
-            "propagate": False,
-        },
+ #       "django": {
+ #           "handlers": ["file", "console"],
+ #           "level": "ERROR",
+ #           "propagate": False,
+ #       },
 
         # Silence SQL queries
-        "django.db.backends": {
-            "handlers": [],
-            "level": "WARNING",  # WARNING prevents SQL DEBUG logging
-            "propagate": False,
-        },
+#        "django.db.backends": {
+#            "handlers": [],
+#            "level": "WARNING",  # WARNING prevents SQL DEBUG logging
+#            "propagate": False,
+#        },
 
-        # Log only errors from requests (404, 500)
-        "django.request": {
-            "handlers": ["file", "console"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-    },
-}
+#        # Log only errors from requests (404, 500)
+#        "django.request": {
+#            "handlers": ["file", "console"],
+#            "level": "ERROR",
+#            "propagate": False,
+#        },
+#    },
+#}
