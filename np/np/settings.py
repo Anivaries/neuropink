@@ -32,7 +32,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'np.middleware.LogBadRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -103,6 +102,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://neuropink.rs',
+    'https://www.neuropink.rs',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -122,7 +125,7 @@ LOGGING = {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
             # Ensure this path is writable
-            'filename': '/home/marko/projects/neuropink/neuropink/logs/neuropink.log',
+            'filename': '/home/marko/projects/neuropink/logs/neuropink.log',
         },
         'console': {
             'class': 'logging.StreamHandler',
