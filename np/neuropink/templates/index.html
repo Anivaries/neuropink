@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,6 +59,87 @@
         border-radius: 30px;
         font-weight: bold;
         margin-bottom: 20px;
+    }
+    
+    .product-showcase {
+        padding: 60px 0;
+        background: white;
+    }
+    
+    .product-image-container {
+        position: relative;
+        text-align: center;
+        padding: 40px;
+    }
+    
+    .product-image-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(255, 77, 148, 0.3);
+        transition: transform 0.3s ease;
+    }
+    
+    .product-image-container img:hover {
+        transform: scale(1.05);
+    }
+    
+    .discount-badge-overlay {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #ff4444;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+        animation: rotate 3s linear infinite;
+    }
+    
+    @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(-5deg); }
+        50% { transform: rotate(0deg); }
+        75% { transform: rotate(5deg); }
+        100% { transform: rotate(0deg); }
+    }
+    
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px;
+    }
+    
+    .price-section {
+        background: var(--pink-light);
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+    }
+    
+    .price-section .old-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 1.5rem;
+    }
+    
+    .price-section .new-price {
+        color: #ff4444;
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0 20px;
+    }
+    
+    .price-section .savings {
+        background: #ff4444;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-top: 10px;
     }
     
     .section {
@@ -212,6 +294,49 @@
             <p class="lead">Vaše rešenje za bol u mišićima, zglobovima i napetost</p>
         </div>
     </section>
+    
+    <section class="product-showcase">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="product-image-container">
+                        <div class="discount-badge-overlay">
+                            -30%
+                        </div>
+                        <!-- PLACEHOLDER IMAGE - Replace with actual product image -->
+                        <img src="{% static 'product/bb.png' %}" alt="NeuroPink Gel">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-info">
+                        <h2 class="mb-4">Efikasno rešenje za ublažavanje bola</h2>
+                        <p class="lead">NeuroPink gel kombinuje moć anestezina i mentola za brzo i dugotrajno olakšanje od različitih vrsta bolova.</p>
+                        
+                        <div class="price-section">
+                            <div class="d-flex align-items-center justify-content-center flex-wrap">
+                                <span class="old-price">1.000 RSD</span>
+                                <span class="new-price">700 RSD</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="savings"><i class="fas fa-tag"></i> Uštedite 300 RSD</span>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Brzo delovanje</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Dugotrajno olakšanje</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Lako za primenu</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> 100g pakovanje</li>
+                        </ul>
+
+                        <a href="{% url 'order' %}" class="btn btn-custom btn-lg mt-3">
+                            <i class="fas fa-shopping-cart"></i> Poručite sada sa popustom
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="section">
         <div class="container">
@@ -330,10 +455,12 @@
                     <div class="warning-box">
                         <h5><i class="fas fa-exclamation-triangle"></i> Važno!</h5>
                         <ul class="mb-0">
-                            <li>Samo za spoljašnju primenu</li>
+                            <li>Ne koristiti kod alergije na lokalne anestetike ili mentol</li>
                             <li>Ne nanositi na otvorene rane, oči ili sluzokožu</li>
+                            <li>Samo za spoljašnju primenu</li>
                             <li>Izbegavati nanošenje na oštećenu kožu</li>
                             <li>Ne prekrivati okluzivnim zavojima</li>
+                            <li>Držati van domašaja dece</li>
                         </ul>
                     </div>
                 </div>
@@ -343,7 +470,7 @@
 
     <section class="section bg-white">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-header">
@@ -358,7 +485,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
+                {% comment %} <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-shield-halved"></i> Upozorenja
@@ -375,17 +502,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </section>
 
     <section class="cta-section">
         <div class="container">
-            <h2 class="mb-4">Oslobodite se bola sa NeuroPink gelom</h2>
-            <p class="lead mb-4">Brzo, efikasno i bezbedno rešenje za svakodnevne bolove</p>
+            <h2 class="mb-4">Iskoristite akcijsku cenu odmah!</h2>
+            <p class="lead mb-4">Uštedite 300 RSD i oslobodite se bola sa NeuroPink gelom</p>
             <a href="{% url 'order' %}"><button class="btn btn-custom">
-                <i class="fas fa-shopping-cart"></i> Poručite sada
+                <i class="fas fa-shopping-cart"></i> Poručite sada - 700 RSD
             </button></a>
         </div>
     </section>

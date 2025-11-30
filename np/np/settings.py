@@ -15,8 +15,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+ADMINS = [('Marko', 'k0m4r4c00@gmail.com')]
 # Application definition
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -104,7 +105,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

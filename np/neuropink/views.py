@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.mail import mail_admins
 
 from .models import Order
 from .forms import OrderForm
@@ -42,6 +43,7 @@ def order_view(request):
                 order_number=generate_order_number(),
             )
             order.save()
+            mail_admins(subject='Narudzba', message='XXXXX narucio')
             return redirect('order_success', order_number=order.order_number)
     else:
         form = OrderForm()
