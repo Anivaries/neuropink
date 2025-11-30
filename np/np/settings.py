@@ -120,7 +120,7 @@ LOGGING = {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": "/home/marko/projects/neuropink/neuropink/np/neuropink.log",
+            "filename": "/home/marko/projects/neuropink/neuropink/logs/neuropink.log",
         },
         "console": {
             "class": "logging.StreamHandler",
