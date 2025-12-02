@@ -42,7 +42,11 @@ def index(request):
             ime = form.cleaned_data['first_name']
             prezime = form.cleaned_data['last_name']
             review = form.cleaned_data['review']
-            print(ime, prezime, review)
+            Testimonials.objects.create(
+                first_name=ime,
+                last_name=prezime,
+                review=review
+            )
             return render(request, 'testimonial_success.html')
     else:
         form = TestimonialForm()
@@ -107,6 +111,7 @@ def testimonial_success(request):
 
 # TODO:
 # smanjiti dugme za kupovinu na malim ekranima
+# ne povecavati velicinu 'vasa recenzija' polja
 # popraviti dodavanje prozivoda u korpu
 # popraviti izgled cena na malim ekranima
 # Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/
