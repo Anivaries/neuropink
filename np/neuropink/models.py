@@ -29,6 +29,3 @@ class Testimonials(models.Model):
     approved = models.BooleanField(default=False)
     rating = models.PositiveSmallIntegerField(default=5)
     created_at = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.review}"

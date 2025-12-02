@@ -2,7 +2,15 @@ from django.contrib import admin
 
 from .models import Order, Testimonials
 
-admin.site.register(Testimonials)
+
+@admin.register(Testimonials)
+class TestimonialsAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name',
+                    'approved', 'rating', 'created_at')
+    list_filter = ('approved', 'rating', 'created_at')
+    search_fields = ('first_name', 'last_name',
+                     'review')
+    ordering = ('-created_at',)
 
 
 @admin.register(Order)
