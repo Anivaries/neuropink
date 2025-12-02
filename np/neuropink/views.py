@@ -17,7 +17,7 @@ def load_more_testimonials(request):
     offset = int(request.GET.get("offset", 0))
     limit = 10
 
-    data = Testimonials.objects.filter(approved=True).order_by('created_at')[
+    data = Testimonials.objects.filter(approved=True).order_by('-created_at')[
         offset:offset + limit]
 
     testimonials_json = []
@@ -47,7 +47,7 @@ def index(request):
     else:
         form = TestimonialForm()
         data = Testimonials.objects.filter(
-            approved=True).order_by('created_at')[:10]
+            approved=True).order_by('-created_at')[:10]
 
         testimonials = [
             {
