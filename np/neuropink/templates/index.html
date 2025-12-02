@@ -26,12 +26,30 @@
         --pink-dark: #ff80bf;
         --pink-accent: #ff4d94;
     }
-    
+    @font-face {
+        font-family: "Milker";
+        src: url("\\static\\font\\Milker.otf") format("opentype");
+    }
+    @font-face {
+        font-family: "Moralana";
+        src: url("\\static\\font\\Moralana.otf") format("opentype");
+    }
+    @font-face {
+        font-family: "DelphiaVillage";
+        src: url("\\static\\font\\DelphiaVillage.otf") format("opentype");
+    }
     body {
         font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, var(--pink-light) 0%, #ffffff 100%);
     }
-    
+    .signature{
+        font-family: "DelphiaVillage";
+        font-size: clamp(24px, 4vw, 48px);
+        letter-spacing: 3px;
+    }
+    .boxes-valty {
+        font-family: "Moralana";
+    }
     .hero-section {
         background: linear-gradient(135deg, var(--pink-medium) 0%, var(--pink-light) 100%);
         padding: 80px 0;
@@ -305,10 +323,11 @@
         }
     }
     .promo-heading {
+        font-family: "Milker";
         font-weight: 700;                /* bold */
         font-size: 2.5rem;               /* bigger size */
         text-align: center;               /* center text */
-        background: linear-gradient(90deg, #ff7a18, #af002d, #319197);
+        background: linear-gradient(90deg, #333, #333, #333);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;  /* gradient text */
         text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* subtle shadow */
@@ -366,8 +385,8 @@
             </div>
             <p class="subtitle pt-4"><b>Gel sa anestezinom i mentolom za lokalnu primenu</b></p>
             <p class="lead"><b>Vaše rešenje za bol u mišićima, zglobovima i upaljene tetive</b></p>
-            <div class="d-flex justify-content-center" style="align-items:flex-end;">
-            <p class="fst-italic mx-3 pt-5"><b>Izrađuje se u apoteci: </b></p><a href="https://www.apotekapharmasi.online/"><img src="{% static 'pharmasi/pharmasi.png' %}"></a>
+            <div class="d-flex justify-content-center align-items-center pt-5">
+            <p class="fst-italic signature m-2"><b>Izradjuje se u apoteci: </b></p><a class="m-2" href="https://www.apotekapharmasi.online/"><img class="img-fluid" src="{% static 'pharmasi/pharmasi.png' %}" alt="pharmasi.png"></a>
             </div>
             
 
@@ -598,14 +617,13 @@
             </div>
         </div>
     </div>
-    
     </section>
 
     <section class="cta-section">
         <div class="container">
-            <h2 class="promo-heading mb-4">Iskoristite akcijsku cenu odmah!</h2>
+            <h2 class="promo-heading mb-4">Iskoristite akcijsku cenu odmah!!!!!</h2>
         </div>
-        <div class="container">
+        <div class="container boxes-valty">
             <!-- 1 Box -->
             <div class="row mb-4 align-items-center">
                 <div class="col-6 d-flex justify-content-end">
@@ -639,37 +657,6 @@
                 </div>
             </div>
         </div>
-        {% comment %} <div class="container">
-            <div class="row mb-4">
-                <div class="col-6 d-flex align-items-center justify-content-end">
-                    <h1 class="text-dark">1 KUTIJA</h1>
-                </div>
-                <div class="col-6 d-flex flex-column align-items-start">
-                    <span class="tilted-line"><h1 class="text-dark">1500</h1></span>
-                    <span><h1 class="text-dark">1000 DINARA</h1></span>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-6 d-flex align-items-center justify-content-end">
-                    <h1 class="text-dark">2 KUTIJE</h1>
-                </div>
-                <div class="col-6 d-flex flex-column align-items-start">
-                    <span class="tilted-line"><h1 class="text-dark">3000</h1></span>
-                    <span><h1 class="text-dark">1800 DINARA</h1></span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6 d-flex align-items-center justify-content-end">
-                    <h1 class="text-dark">3 KUTIJE</h1>
-                </div>
-                <div class="col-6 d-flex flex-column align-items-start" style="font-size:1rem;">
-                    <span class="tilted-line"><h1 class="text-dark">4500</h1></span>
-                    <span><h1 class="text-dark">2400 DINARA</h1></span>
-                </div>
-            </div>
-        </div> {% endcomment %}
         <a href="{% url 'order' %}" class="floating-btn">
             <button class="btn btn-custom btn-lg w-100 w-md-auto">
                 <i class="fas fa-shopping-cart"></i> Poručite sada
@@ -681,14 +668,12 @@
                 <i class="fa-solid fa-truck fa-2x me-3 text-primary"></i>
 
                 <!-- Text -->
-                <div>
+                <div class="boxes-valty">
                     <h3 class="mb-1">BESPLATNA POSTARINA</h3>
                     <p class="mb-0 text-dark fw-bold">SLANJE KAO CC PAKET</p>
                 </div>
             </div>
         </div>
-        
-        
     </section>
     
     <footer class="text-center py-4" style="background: var(--pink-light);">
