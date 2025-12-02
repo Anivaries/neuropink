@@ -110,6 +110,7 @@ def testimonial_success(request):
     return render(request, 'testimonial_success.html')
 
 # TODO:
+# Prebaciti na HTTPS
 # smanjiti dugme za kupovinu na malim ekranima
 # ne povecavati velicinu 'vasa recenzija' polja
 # popraviti dodavanje prozivoda u korpu

@@ -12,10 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fbgln&_arnkv2dxez-b&=2v7y&rz22d@p+$9d1r0l6yk+6$u7c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
+# ALLOWED_HOSTS = ['*']
 
 ADMINS = [('Marko', 'k0m4r4c00@gmail.com')]
 # Application definition
@@ -119,7 +119,7 @@ CSRF_TRUSTED_ORIGINS = [
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/staticfiles/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
