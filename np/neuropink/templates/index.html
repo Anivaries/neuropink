@@ -1,4 +1,5 @@
 {% load static %}
+{% load conv_int %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,7 +201,7 @@
     
     .ingredient-card {
         background: var(--pink-light);
-        padding: 25px;
+        padding: 45px;
         border-radius: 12px;
         margin-bottom: 20px;
         border: 2px solid var(--pink-medium);
@@ -256,7 +257,29 @@
         text-align: center;
         margin-top: 60px;
     }
-    
+    .floating-btn {
+        position: fixed;
+        bottom: 130px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+    }
+    .tilted-line {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tilted-line::after {
+        content: '';
+        position: absolute;
+        top: 40%;            /* middle of the text */
+        left: 0;
+        width: 100%;
+        height: 5px;         /* thickness of line */
+        background: #5f1717;   /* color of line */
+        transform: rotate(-10deg); /* slant the line */
+        transform-origin: center;
+    }
     .btn-custom {
         background: white;
         color: var(--pink-accent);
@@ -282,6 +305,36 @@
             font-size: 1.2rem;
         }
     }
+    .promo-heading {
+        font-weight: 700;                /* bold */
+        font-size: 2.5rem;               /* bigger size */
+        text-align: center;               /* center text */
+        background: linear-gradient(90deg, #ff7a18, #af002d, #319197);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;  /* gradient text */
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* subtle shadow */
+        position: relative;
+    }
+
+    .promo-heading::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: #ff7a18;
+        margin: 8px auto 0;           /* underline below text, centered */
+        border-radius: 2px;
+    }
+
+    /* Optional: subtle animation */
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .promo-heading {
+        animation: pulse 2s infinite;
+    }
 </style>
 </head>
 <body>
@@ -291,51 +344,9 @@
                 <i class="fas fa-heart-pulse"></i> Brzo i efikasno ublažavanje bola
             </div>
             <h1>NeuroPink</h1>
-            <p class="subtitle">Gel sa anestezinom i mentolom za lokalnu primenu</p>
-            <p class="lead">Vaše rešenje za bol u mišićima, zglobovima i napetost</p>
-        </div>
-    </section>
-    
-    <section class="product-showcase">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="product-image-container">
-                        <div class="discount-badge-overlay">
-                            -30%
-                        </div>
-                        <!-- PLACEHOLDER IMAGE - Replace with actual product image -->
-                        <img src="{% static 'product/bb.png' %}" alt="NeuroPink Gel">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="product-info">
-                        <h2 class="mb-4">Efikasno rešenje za ublažavanje bola</h2>
-                        <p class="lead">NeuroPink gel kombinuje moć anestezina i mentola za brzo i dugotrajno olakšanje od različitih vrsta bolova.</p>
-                        
-                        <div class="price-section">
-                            <div class="d-flex align-items-center justify-content-center flex-wrap">
-                                <span class="old-price">1.000 RSD</span>
-                                <span class="new-price">700 RSD</span>
-                            </div>
-                            <div class="text-center">
-                                <span class="savings"><i class="fas fa-tag"></i> Uštedite 300 RSD</span>
-                            </div>
-                        </div>
-
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Brzo delovanje</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Dugotrajno olakšanje</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Lako za primenu</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success"></i> 100g pakovanje</li>
-                        </ul>
-
-                        <a href="{% url 'order' %}" class="btn btn-custom btn-lg mt-3">
-                            <i class="fas fa-shopping-cart"></i> Poručite sada sa popustom
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <img src="{% static 'product/ccc.png' %}" alt="NeuroPink Gel" height="auto">
+            <p class="subtitle pt-4"><b>Gel sa anestezinom i mentolom za lokalnu primenu</b></p>
+            <p class="lead"><b>Vaše rešenje za bol u mišićima, zglobovima i upaljene tetive</b></p>
         </div>
     </section>
 
@@ -358,7 +369,7 @@
                     <div class="card">
                         <div class="card-body text-center p-4">
                             <div class="icon-box">
-                                <i class="fas fa-bone"></i>
+                                <i class="fas fa-person-walking"></i>
                             </div>
                             <h5>Bolovi u zglobovima</h5>
                             <p>Olakšava bol i ukočenost zglobova</p>
@@ -369,7 +380,7 @@
                     <div class="card">
                         <div class="card-body text-center p-4">
                             <div class="icon-box">
-                                <i class="fas fa-hand-back-fist"></i>
+                                <img src="{% static 'fa/tendon_s.png' %}" width="40" height="45" alt="tendon">
                             </div>
                             <h5>Upale tetiva</h5>
                             <p>Smanjuje upalu i iritaciju tetiva</p>
@@ -380,7 +391,7 @@
                     <div class="card">
                         <div class="card-body text-center p-4">
                             <div class="icon-box">
-                                <i class="fas fa-person-walking"></i>
+                                <img src="{% static 'fa/painn.png' %}" width="40" height="45" alt="pain fa">
                             </div>
                             <h5>Napetost mišića</h5>
                             <p>Ublažava napetost u vratu i leđima</p>
@@ -402,10 +413,10 @@
                     <div class="card">
                         <div class="card-body text-center p-4">
                             <div class="icon-box">
-                                <i class="fas fa-hands"></i>
+                                <img src="{% static 'fa/msl.png' %}" width="40" height="45" alt="muscle">
                             </div>
                             <h5>Lokalna iritacija</h5>
-                            <p>Umiruje lokalizovanu iritaciju mišića</p>
+                            <p>Umiruje upalu mišića</p>
                         </div>
                     </div>
                 </div>
@@ -441,7 +452,7 @@
                     <ul class="usage-steps">
                         <li>
                             <strong>Naneti tanki sloj</strong><br>
-                            Iscedite malu količinu gela i ravnomerno nanesite na bolno mesto
+                            Uzmite malu količinu gela i ravnomerno nanesite na bolno mesto
                         </li>
                         <li>
                             <strong>Lagano utrljati</strong><br>
@@ -456,12 +467,11 @@
                     <div class="warning-box">
                         <h5><i class="fas fa-exclamation-triangle"></i> Važno!</h5>
                         <ul class="mb-0">
+                            <li>Samo za spoljašnju primenu</li>
                             <li>Ne koristiti kod alergije na lokalne anestetike ili mentol</li>
                             <li>Ne nanositi na otvorene rane, oči ili sluzokožu</li>
-                            <li>Samo za spoljašnju primenu</li>
-                            <li>Izbegavati nanošenje na oštećenu kožu</li>
-                            <li>Ne prekrivati okluzivnim zavojima</li>
                             <li>Držati van domašaja dece</li>
+                            <li>Ne preporučuje se deci mlađoj od 12 godina</li>
                         </ul>
                     </div>
                 </div>
@@ -482,50 +492,164 @@
                                 <i class="fas fa-clock" style="color: var(--pink-accent); font-size: 3rem;"></i>
                             </h5>
                             <p class="text-center lead"><strong>6 meseci</strong> nakon otvaranja</p>
-                            <p class="text-muted text-center">Čuvati na sobnoj temperaturi, van domašaja dece</p>
+                            <p class="text-muted text-center">Gel je najbolje čuvati na sobnoj temperaturi</p>
                         </div>
                     </div>
                 </div>
-                {% comment %} <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-shield-halved"></i> Upozorenja
-                        </div>
-                        <div class="card-body">
-                            <div class="benefit-item">
-                                <i class="fas fa-times-circle"></i> Ne koristiti kod alergije na lokalne anestetike ili mentol
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-times-circle"></i> Ne prekrivati okluzivnim zavojima
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-times-circle"></i> Držati van domašaja dece
-                            </div>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
             </div>
         </div>
     </section>
 
+    <section>
+    <div class="container my-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4" id="testimonials-container">
+            {% for t in testimonials %}
+            <div class="col testimonial-card">
+                <div class="card h-100 shadow-sm p-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <h6 class="mb-0 me-2">
+                                {% if t.last_name %}
+                                    {{ t.first_name }} {{ t.last_name }}
+                                {% else %}
+                                    {{ t.first_name }}
+                                {% endif %}
+                            </h6>
+                            <div>
+                                {% for i in "12345"|make_list %}
+                                    {% if i|conv_int <= t.rating %}
+                                        <i class="fa-solid fa-star text-warning"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-star text-warning"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="card-text">{{ t.review }}</p>
+                        <small class="text-muted">
+                            {{ t.created_at|date:"j F, Y" }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <button id="load-more-btn" class="btn btn-danger">Učitaj još</button>
+        </div>
+        
+    </div>
+    </section>
+
     <section class="cta-section">
         <div class="container">
-            <h2 class="mb-4">Iskoristite akcijsku cenu odmah!</h2>
-            <p class="lead mb-4">Uštedite 300 RSD i oslobodite se bola sa NeuroPink gelom</p>
-            <a href="{% url 'order' %}"><button class="btn btn-custom">
-                <i class="fas fa-shopping-cart"></i> Poručite sada - 700 RSD
-            </button></a>
+            <h2 class="promo-heading mb-4">Iskoristite akcijsku cenu odmah!</h2>
         </div>
+        
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-6 d-flex align-items-center justify-content-end">
+                    <h1 class="text-dark">1 KUTIJA</h1>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line"><h1 class="text-dark">1500</h1></span>
+                    <span><h1 class="text-dark">1000 DINARA</h1></span>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6 d-flex align-items-center justify-content-end">
+                    <h1 class="text-dark">2 KUTIJE</h1>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line"><h1 class="text-dark">3000</h1></span>
+                    <span><h1 class="text-dark">1800 DINARA</h1></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 d-flex align-items-center justify-content-end">
+                    <h1 class="text-dark">3 KUTIJE</h1>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line"><h1 class="text-dark">4500</h1></span>
+                    <span><h1 class="text-dark">2400 DINARA</h1></span>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'order' %}" class="floating-btn">
+            <button class="btn btn-custom">
+                <i class="fas fa-shopping-cart"></i> Poručite sada
+            </button>
+        </a>
+        <div class="container my-3 pb-4 text-center">
+            <div class="d-flex align-items-start justify-content-center">
+                <!-- Icon -->
+                <i class="fa-solid fa-truck fa-2x me-3 text-primary"></i>
+
+                <!-- Text -->
+                <div>
+                    <h3 class="mb-1">BESPLATNA POSTARINA</h3>
+                    <p class="mb-0 text-dark fw-bold">SLANJE KAO CC PAKET</p>
+                </div>
+            </div>
+        </div>
+        
+        
     </section>
+    
     <footer class="text-center py-4" style="background: var(--pink-light);">
         <div class="container">
-            <p class="mb-0">&copy; 2025 NeuroPink. Sva prava zadržana.</p>
-            <p class="text-muted small">Samo za spoljašnju upotrebu. Pročitajte uputstvo pre upotrebe.</p>
+            <p class="mb-0">&copy; 2023-2025 NeuroPink</p>
+            <p class="text-muted small">Pre primene pročitajte uputstvo.</p>
         </div>
     </footer>
     <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.2.0/mdb.umd.min.js"
     ></script>
+    <script>
+    let offset = {{ testimonials|length }};
+    const limit = 10;
+
+    document.getElementById('load-more-btn').addEventListener('click', function() {
+        fetch(`/load-more/?offset=${offset}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('testimonials-container');
+                data.testimonials.forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = 'col testimonial-card';
+                    card.innerHTML = `
+                        <div class="card h-100 shadow-sm p-3">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 me-2">
+                                        ${t.last_name ? t.first_name + ' ' + t.last_name : t.first_name}
+                                    </h6>
+                                    <div>
+                                        ${[1,2,3,4,5].map(i => i <= t.rating 
+                                            ? '<i class="fa-solid fa-star text-warning"></i>'
+                                            : '<i class="fa-regular fa-star text-warning"></i>'
+                                        ).join('')}
+                                    </div>
+                                </div>
+                                <p class="card-text">${t.review}</p>
+                                <small class="text-muted">${new Date(t.created_at).toLocaleDateString('sr-RS', {day: 'numeric', month: 'long', year: 'numeric'})}</small>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                offset += data.testimonials.length;
+
+                if (data.testimonials.length < limit) {
+                    document.getElementById('load-more-btn').style.display = 'none';
+                }
+            })
+            .catch(err => console.error(err));
+    });
+    </script>
 </body>
 </html>

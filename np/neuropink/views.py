@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import mail_admins
+from django.http import JsonResponse
 
-from .models import Order
-from .forms import OrderForm
+from .models import Order, Testimonials
+from .forms import OrderForm, TestimonialForm
 
 import random
 
@@ -12,8 +13,48 @@ UNIT_PRICE = 500
 DELIVERY = 0
 
 
+def load_more_testimonials(request):
+    offset = int(request.GET.get("offset", 0))
+    limit = 10
+
+    data = Testimonials.objects.filter(approved=True)[offset:offset + limit]
+
+    testimonials_json = []
+    for t in data:
+        t_json = {
+            "first_name": t.first_name,
+            "last_name": t.last_name,
+            "review": t.review,
+            "rating": t.rating,
+            "created_at": t.created_at,
+        }
+
+        testimonials_json.append(t_json)
+
+    return JsonResponse({"testimonials": testimonials_json})
+
+
 def index(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = TestimonialForm()
+        data = Testimonials.objects.filter(approved=True)[:10]
+
+        testimonials = [
+            {
+                "first_name": t.first_name,
+                "review": t.review,
+                "last_name": t.last_name,
+                "rating": t.rating,
+                "created_at": t.created_at,
+            }
+            for t in data
+        ]
+
+    return render(request, 'index.html', {'form': form, 'testimonials': testimonials})
 
 
 def generate_order_number():
@@ -53,3 +94,10 @@ def order_view(request):
 
 def order_success(request, order_number):
     return render(request, 'order_success.html', {'order_number': order_number})
+
+
+# TODO:
+# Prebaciti sliku u html
+# Napraviti floating button za kupovinu
+# Generisati testemoniale
+# Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/

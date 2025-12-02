@@ -1,6 +1,7 @@
-from django.db import models
+
 
 from django.db import models
+from django.utils import timezone
 
 
 class Order(models.Model):
@@ -19,3 +20,15 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.first_name} {self.last_name}"
+
+
+class Testimonials(models.Model):
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    review = models.TextField(blank=False, null=False)
+    approved = models.BooleanField(default=False)
+    rating = models.PositiveSmallIntegerField(default=5)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.review}"

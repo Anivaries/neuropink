@@ -1,6 +1,8 @@
 # forms.py
 from django import forms
 
+from .models import Testimonials
+
 
 class OrderForm(forms.Form):
     first_name = forms.CharField(
@@ -53,3 +55,14 @@ class OrderForm(forms.Form):
         label='Količina',
         widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
+
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonials
+        fields = ['first_name', 'last_name', 'review']
+        labels = {
+            'first_name': 'Ime',
+            'last_name': 'Prezime',
+            'review': 'Vaša recenzija',
+        }
