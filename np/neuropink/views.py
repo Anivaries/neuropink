@@ -17,7 +17,8 @@ def load_more_testimonials(request):
     offset = int(request.GET.get("offset", 0))
     limit = 10
 
-    data = Testimonials.objects.filter(approved=True)[offset:offset + limit]
+    data = Testimonials.objects.filter(approved=True).order_by('created_at')[
+        offset:offset + limit]
 
     testimonials_json = []
     for t in data:
@@ -38,10 +39,15 @@ def index(request):
     if request.method == 'POST':
         form = TestimonialForm(request.POST)
         if form.is_valid():
-            pass
+            ime = form.cleaned_data['first_name']
+            prezime = form.cleaned_data['last_name']
+            review = form.cleaned_data['review']
+            print(ime, prezime, review)
+            return render(request, 'testimonial_success.html')
     else:
         form = TestimonialForm()
-        data = Testimonials.objects.filter(approved=True)[:10]
+        data = Testimonials.objects.filter(
+            approved=True).order_by('created_at')[:10]
 
         testimonials = [
             {
@@ -96,8 +102,16 @@ def order_success(request, order_number):
     return render(request, 'order_success.html', {'order_number': order_number})
 
 
+def testimonial_success(request):
+    return render(request, 'testimonial_success.html')
+
 # TODO:
+# smanjiti dugme za kupovinu na malim ekranima
+# popraviti dodavanje prozivoda u korpu
+# popraviti izgled cena na malim ekranima
+# Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/
+
+# Done
 # Prebaciti sliku u html
 # Napraviti floating button za kupovinu
 # Generisati testemoniale
-# Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/

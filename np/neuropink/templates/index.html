@@ -283,8 +283,7 @@
     .btn-custom {
         background: white;
         color: var(--pink-accent);
-        padding: 15px 40px;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         border: none;
         border-radius: 30px;
@@ -334,6 +333,20 @@
 
     .promo-heading {
         animation: pulse 2s infinite;
+    }
+    .card .your-testimonial {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(255, 77, 148, 0.15);
+        background: white;
+        overflow: hidden;
+        
+    }
+    .card-header .your-testimonial-header {
+        background: linear-gradient(135deg, var(--pink-dark) 0%, var(--pink-accent) 100%);
+        color: white;
+        padding: 25px;
+        border: none;
     }
 </style>
 </head>
@@ -545,14 +558,83 @@
         </div>
         
     </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card your-testimonial shadow-sm" style="transform: none !important;">
+                <div class="card-header bg-primary text-white fw-bold">Vaša recenzija</div>
+                    <div class="card-body p-4">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Ime" required>
+                                        <label for="id_first_name">Ime <span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Prezime">
+                                        <label for="id_last_name">Prezime</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Vaša recenzija" id="id_review" name="review" style="height:120px;" required></textarea>
+                                <label for="id_review">Vaša recenzija <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger btn-sm">Pošalji recenziju</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     </section>
 
     <section class="cta-section">
         <div class="container">
             <h2 class="promo-heading mb-4">Iskoristite akcijsku cenu odmah!</h2>
         </div>
-        
         <div class="container">
+            <!-- 1 Box -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-6 d-flex justify-content-end">
+                    <span class="display-6 fw-bold">1 KUTIJA</span>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line display-6 text-dark">1500</span>
+                    <span class="fs-5 fw-bold">1000 DINARA</span>
+                </div>
+            </div>
+
+            <!-- 2 Boxes -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-6 d-flex justify-content-end">
+                    <span class="display-6 fw-bold">2 KUTIJE</span>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line display-6 text-dark">3000</span>
+                    <span class="fs-5 fw-bold">1800 DINARA</span>
+                </div>
+            </div>
+
+            <!-- 3 Boxes -->
+            <div class="row align-items-center">
+                <div class="col-6 d-flex justify-content-end">
+                    <span class="display-6 fw-bold">3 KUTIJE</span>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <span class="tilted-line display-6 text-dark">4500</span>
+                    <span class="fs-5 fw-bold">2400 DINARA</span>
+                </div>
+            </div>
+        </div>
+        {% comment %} <div class="container">
             <div class="row mb-4">
                 <div class="col-6 d-flex align-items-center justify-content-end">
                     <h1 class="text-dark">1 KUTIJA</h1>
@@ -577,14 +659,14 @@
                 <div class="col-6 d-flex align-items-center justify-content-end">
                     <h1 class="text-dark">3 KUTIJE</h1>
                 </div>
-                <div class="col-6 d-flex flex-column align-items-start">
+                <div class="col-6 d-flex flex-column align-items-start" style="font-size:1rem;">
                     <span class="tilted-line"><h1 class="text-dark">4500</h1></span>
                     <span><h1 class="text-dark">2400 DINARA</h1></span>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <a href="{% url 'order' %}" class="floating-btn">
-            <button class="btn btn-custom">
+            <button class="btn btn-custom btn-lg w-100 w-md-auto">
                 <i class="fas fa-shopping-cart"></i> Poručite sada
             </button>
         </a>

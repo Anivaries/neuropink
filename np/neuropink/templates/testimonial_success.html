@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <title>Uspešna narudžbina - NeuroPink</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink-light: #ffe4f0;
+            --pink-medium: #ffb3d9;
+            --pink-dark: #ff80bf;
+            --pink-accent: #ff4d94;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--pink-light) 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(255, 77, 148, 0.15);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            animation: fadeInUp 0.7s ease forwards;
+        }
+
+        /* Smooth fade-in animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            font-size: 70px;
+            color: var(--pink-accent);
+            margin-bottom: 20px;
+            animation: pop 0.6s ease;
+        }
+
+        /* Bouncy icon animation */
+        @keyframes pop {
+            0% { transform: scale(0.2); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .success-title {
+            color: var(--pink-accent);
+            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .success-text {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .order-number-box {
+            background: var(--pink-light);
+            border-left: 5px solid var(--pink-accent);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, var(--pink-accent), var(--pink-dark));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            transition: 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-card">
+
+        <i class="fas fa-check-circle success-icon"></i>
+
+        <h1 class="success-title">Recenzija je primljena!</h1>
+
+        <p class="success-text">
+            Hvala vam na poverenju. Vaša recenzija je zabeležena i uskoro će biti objavljena.
+        </p>
+
+        <a href="{% url 'index' %}" class="btn-home">
+            <i class="fas fa-home"></i> Nazad na početnu
+        </a>
+
+    </div>
+
+</body>
+</html>
