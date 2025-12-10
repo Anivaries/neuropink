@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <meta name="description" content="NeuroPink gel brzo ublažava bol u mišićima, zglobovima i tetivama. Sadrži anestezin i mentol za trenutno olakšanje sportskih povreda, upala i napetosti. Sigurna primena, jednostavno nanošenje i brzi rezultati.">
+    <meta property="og:url" content="https://neuropink.rs/">
+    <meta property="og:image" content="{% static 'img\android-chrome-512x512.png' %}">
+    <meta property="og:image:alt" content="NeuroPink - Gel protiv bolova u mišićima, zglobovima i upaljene tetive">
+    <meta property="og:title" content="NeuroPink">
+    <meta property="og:description" content="NeuroPink gel pruža brzo i efikasno ublažavanje bola kod sportskih povreda, istegnuća, upala tetiva, neuralgija i napetosti mišića.">
+    <meta property="og:type" content="website">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img\android-chrome-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img\android-chrome-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img\android-chrome-16x16.png' %}">
     <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     rel="stylesheet"
@@ -18,7 +29,6 @@
     />
     <link rel="icon" href="{% static 'img/favicon.ico' %}?v=2">
     {% block link %}{% endblock link %}
-    <title>{% block title %}{% endblock title %}</title>
     <style>
         :root {
         --pink-light: #ffe4f0;
