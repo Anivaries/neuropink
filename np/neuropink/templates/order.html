@@ -358,13 +358,13 @@
                             <div class="product-summary">
                                 <h4>NeuroPink Gel</h4>
                                 <div class="product-item">
-                                    <div>
-                                        <strong>Cena po komadu</strong><br>
-                                        <span class="text-muted">100g</span>
-                                    </div>
-                                    <div class="text-end">
-                                        <strong style="color: var(--pink-accent); font-size: 1.2rem;">700,00 RSD</strong>
-                                    </div>
+                                    {% comment %} <div> {% endcomment %}
+                                        {% comment %} <strong>Cena po komadu</strong><br> {% endcomment %}
+                                        {% comment %} <span class="text-muted">100g</span> {% endcomment %}
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="text-end">
+                                        <strong style="color: var(--pink-accent); font-size: 1.2rem;">{{JEDNA_KUTIJA}},00 RSD</strong>
+                                    </div> {% endcomment %}
                                 </div>
                                 <div class="product-item">
                                     <div>
@@ -392,12 +392,11 @@
                             <div class="total-section">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="total-label">UKUPNO:</span>
-                                    <span class="total-price" id="totalPrice">1.450 RSD</span>
-                                    {% comment %} <span class="total-price" id="totalPrice"></span> {% endcomment %}
+                                    <span class="total-price" id="totalPrice"></span>
                                 </div>
                             </div>
 
-                            <div class="payment-info mt-4">
+                            {% comment %} <div class="payment-info mt-4">
                                 <div class="d-flex align-items-start">
                                     <i class="fas fa-money-bill-wave"></i>
                                     <div>
@@ -405,7 +404,7 @@
                                         <p class="mb-0 mt-2">Plaćate kuriru prilikom preuzimanja paketa</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
 
                             {% comment %} <div class="delivery-info">
                                 <div class="d-flex align-items-start">
@@ -431,33 +430,51 @@
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const PRICE_PER_ITEM = 700;
-        const DELIVERY_COST = 0;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const CENA_VISE_KUTIJA = {{BASE_CENA}};
+    const JEDNA_KUTIJA = {{JEDNA_KUTIJA}};
+    const DVE_KUTIJE = {{DVE_KUTIJE}};
+    const TRI_KUTIJE = {{TRI_KUTIJE}};
 
-        function updateTotal() {
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const total = (PRICE_PER_ITEM * quantity) + DELIVERY_COST;
-            document.getElementById('totalPrice').textContent = total.toLocaleString('sr-RS') + ' RSD';
-            document.getElementById('id_quantity').value = quantity;
+    function calculateTotal(quantity) {
+        if (quantity === 1) {
+            return JEDNA_KUTIJA;
+        } else if (quantity === 2) {
+            return DVE_KUTIJE;
+        } else if (quantity === 3) {
+            return TRI_KUTIJE;
+        } else {
+            return TRI_KUTIJE + (CENA_VISE_KUTIJA * (quantity - 3));
         }
+    }
 
-        function increaseQuantity() {
-            const input = document.getElementById('quantity');
-            input.value = parseInt(input.value) + 1;
+    function updateTotal() {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const total = calculateTotal(quantity);
+
+        document.getElementById('totalPrice').textContent =
+            total.toLocaleString('sr-RS') + ' RSD';
+
+        // Ensure form field gets synced
+        document.getElementById('id_quantity').value = quantity;
+    }
+
+    function increaseQuantity() {
+        const input = document.getElementById('quantity');
+        input.value = parseInt(input.value) + 1;
+        updateTotal();
+    }
+
+    function decreaseQuantity() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
             updateTotal();
         }
+    }
 
-        function decreaseQuantity() {
-            const input = document.getElementById('quantity');
-            if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
-                updateTotal();
-            }
-        }
-
-        updateTotal();
-    </script>
+    updateTotal();
+</script>
 </body>
 </html>

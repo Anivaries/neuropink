@@ -12,12 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fbgln&_arnkv2dxez-b&=2v7y&rz22d@p+$9d1r0l6yk+6$u7c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
 # ALLOWED_HOSTS = ['*']
 
-ADMINS = [('Marko', 'k0m4r4c00@gmail.com')]
+ADMINS = [('Marko', 'k0m4r4c00@gmail.com'),
+          ('Saša', 'sasamilosevic.1992@gmail.com')]
 # Application definition
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

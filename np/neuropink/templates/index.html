@@ -360,6 +360,30 @@
         padding: 25px;
         border: none;
     }
+    .submit-btn {
+    background-color: var(--pink-dark);
+    border-color: var(--pink-dark);
+    color: white;
+    }
+
+    .submit-btn:hover {
+        background-color: var(--pink-accent);
+        border-color: var(--pink-accent);
+    }
+    .load-btn {
+    background-color: transparent;
+    border: 2px solid var(--pink-medium);
+    color: var(--pink-dark);
+    }
+
+    .load-btn:hover {
+        background-color: var(--pink-light);
+        border-color: var(--pink-dark);
+    }
+    textarea {
+        resize: none;
+        overflow-y: auto; /* enables scrollbar */
+    }
 </style>
 </head>
 <body>
@@ -376,11 +400,17 @@
                     </div>
                 </div>
             </div>
+            <div class="row align-items-center pb-3">
+                <div class="col-12 d-flex justify-content-center">
+                    <small class="display-11 text-black">*Svaka kutija sadrzi 100 grama</small>
+                </div>
+            </div>
             <p class="subtitle pt-4"><b>Gel sa anestezinom i mentolom za lokalnu primenu</b></p>
             <p class="lead"><b>Vaše rešenje za bol u mišićima, zglobovima i upaljene tetive</b></p>
             <div class="d-flex justify-content-center align-items-center pt-5">
             <p class="fst-italic signature m-2"><b>Izradjuje se u apoteci: </b></p><a class="m-2" target="_blank" href="https://www.apotekapharmasi.online/"><img class="img-fluid" src="{% static 'pharmasi/pharmasi.png' %}" alt="pharmasi.png"></a>
             </div>
+            
             
 
         </div>
@@ -571,7 +601,7 @@
             {% endfor %}
         </div>
         <div class="text-center mt-3">
-            <button id="load-more-btn" class="btn btn-danger">Učitaj još</button>
+            <button id="load-more-btn" class="btn load-btn">Učitaj još</button>
         </div>
         
     </div>
@@ -602,7 +632,7 @@
                                 <label for="id_review">Vaša recenzija <span class="text-danger">*</span></label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-danger btn-sm">Pošalji recenziju</button>
+                                <button type="submit" class="btn submit-btn btn-sm">Pošalji recenziju</button>
                             </div>
                         </form>
                     </div>
@@ -642,6 +672,11 @@
                 <div class="col-6 d-flex flex-column align-items-start">
                     <span class="tilted-line display-6 text-dark">4500</span>
                     <span class="fs-5 fw-bold cena-pulse">2400 DINARA</span>
+                </div>
+            </div>
+            <div class="row align-items-center pb-3">
+                <div class="col-12 d-flex justify-content-center">
+                    <span class="display-11 text-black" style="letter-spacing:2px;">*Svaka naredna kutija košta 800 DIN</span>
                 </div>
             </div>
         </div>

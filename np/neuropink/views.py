@@ -2,14 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import mail_admins
 from django.http import JsonResponse
+from django.utils.html import strip_tags
 
 from .models import Order, Testimonials
 from .forms import OrderForm, TestimonialForm
 
 import random
 
-
-UNIT_PRICE = 500
+BASE_CENA = 800
+JEDNA_KUTIJA = 1000
+DVE_KUTIJE = 1800
+TRI_KUTIJE = 2400
 DELIVERY = 0
 
 
@@ -74,32 +77,34 @@ def generate_order_number():
             return number
 
 
+def calculate_price(quantity):
+    if quantity == 1:
+        return JEDNA_KUTIJA
+    elif quantity == 2:
+        return DVE_KUTIJE
+    elif quantity == 3:
+        return TRI_KUTIJE
+    return TRI_KUTIJE + BASE_CENA * (quantity - 3)
+
+
 def order_view(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             quantity = max(1, form.cleaned_data['quantity'])
-            total_price = quantity * UNIT_PRICE + DELIVERY
-            order = Order(
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                address=form.cleaned_data['address'],
-                city=form.cleaned_data['city'],
-                postal_code=form.cleaned_data['postal_code'],
-                phone=form.cleaned_data['phone'],
-                email=form.cleaned_data['email'],
-                note=form.cleaned_data['note'],
-                quantity=quantity,
-                total_price=total_price,
-                order_number=generate_order_number(),
-            )
+            total_price = calculate_price(quantity)
+
+            order = form.save(commit=False)
+            order.quantity = quantity
+            order.total_price = total_price
+            order.order_number = generate_order_number()
             order.save()
             mail_admins(subject='Narudzba', message='XXXXX narucio')
             return redirect('order_success', order_number=order.order_number)
     else:
         form = OrderForm()
 
-    return render(request, 'order.html', {'form': form})
+    return render(request, 'order.html', {'form': form, 'BASE_CENA': BASE_CENA, 'JEDNA_KUTIJA': JEDNA_KUTIJA, 'DVE_KUTIJE': DVE_KUTIJE, 'TRI_KUTIJE': TRI_KUTIJE})
 
 
 def order_success(request, order_number):
@@ -112,12 +117,13 @@ def testimonial_success(request):
 # TODO:
 # Prebaciti na HTTPS
 # smanjiti dugme za kupovinu na malim ekranima
-# ne povecavati velicinu 'vasa recenzija' polja
-# popraviti dodavanje prozivoda u korpu
 # popraviti izgled cena na malim ekranima
-# Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/
+
 
 # Done
 # Prebaciti sliku u html
 # Napraviti floating button za kupovinu
 # Generisati testemoniale
+# ne povecavati velicinu 'vasa recenzija' polja
+# popraviti dodavanje prozivoda u korpu
+# Dodati mogucnost ostavljanja recenzija (ispod ostalih) https://beliwmedia.com/kako-dodati-google-reviews-recenzije-u-sajt-uputstvo/
