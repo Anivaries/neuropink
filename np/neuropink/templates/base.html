@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
+    <meta name="facebook-domain-verification" content="yxxdgnep50f18e5h1y9n4kjvm1izon" />
     <meta name="description" content="NeuroPink gel brzo ublažava bol u mišićima, zglobovima i tetivama. Sadrži anestezin i mentol za trenutno olakšanje sportskih povreda, upala i napetosti. Sigurna primena, jednostavno nanošenje i brzi rezultati.">
     <meta property="og:url" content="https://neuropink.rs/">
     <meta property="og:image" content="{% static 'img\android-chrome-512x512.png' %}">
@@ -38,7 +39,36 @@
     }
     </style>
     {% block style %}{% endblock style %}
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1238578208233223');
+fbq('track', 'PageView');
+{% if order_success %}
+fbq('track', 'Purchase', {value: 1000.00, currency: 'RSD'});
+{% endif %}
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1238578208233223&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code --> 
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZF06592XN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WZF06592XN');
+</script>
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-fill">
     {% block order %}{% endblock order%}
