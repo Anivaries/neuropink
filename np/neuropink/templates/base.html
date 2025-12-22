@@ -54,6 +54,9 @@ fbq('track', 'PageView');
 {% if order_success %}
 fbq('track', 'Purchase', {value: 1000.00, currency: 'RSD'});
 {% endif %}
+{% if order %}
+fbq('track', 'AddToCart');
+{% endif %}
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1238578208233223&ev=PageView&noscript=1"
