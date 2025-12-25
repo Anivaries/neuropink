@@ -31,7 +31,6 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('order_number', 'first_name',
                      'last_name', 'phone', 'email')
     readonly_fields = ('order_number', 'total_price', 'created_at')
-    list_editable = ('completed',)
 
     fieldsets = (
         ("Order Information", {
