@@ -1,10 +1,13 @@
-
+import uuid
 
 from django.db import models
 from django.utils import timezone
 
 
 class Order(models.Model):
+    completed_order_by_user = models.BooleanField(default=False)
+    access_token = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)

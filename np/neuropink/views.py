@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 from .models import Order, Testimonials
 from .forms import OrderForm, TestimonialForm
@@ -199,17 +200,26 @@ def order_view(request):
             order.quantity = quantity
             order.total_price = total_price
             order.order_number = generate_order_number()
+            order.completed_order_by_user = True
             order.save()
-            email_order(order)
-            return redirect('order_success', order_number=order.order_number)
+            # email_order(order)
+            return redirect('order_success', token=order.access_token)
     else:
         form = OrderForm()
 
     return render(request, 'order.html', {'form': form, 'BASE_CENA': BASE_CENA, 'JEDNA_KUTIJA': JEDNA_KUTIJA, 'DVE_KUTIJE': DVE_KUTIJE, 'TRI_KUTIJE': TRI_KUTIJE})
 
 
-def order_success(request, order_number):
-    return render(request, 'order_success.html', {'order_number': order_number})
+def order_success(request, token):
+    try:
+        order = Order.objects.get(access_token=token)
+    except Order.DoesNotExist:
+        return redirect("/")
+
+    if not order.completed_order_by_user:
+        return redirect("/")
+
+    return render(request, 'order_success.html', {'order_number': order.order_number})
 
 
 def testimonial_success(request):

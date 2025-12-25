@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path('order/', views.order_view, name='order'),
-    path('order/<int:order_number>', views.order_success, name='order_success'),
+    # path('order/<int:order_number>', views.order_success, name='order_success'),
+    path("order/<uuid:token>/", views.order_success, name="order_success"),
     path('testimonial/', views.testimonial_success, name='testimonial_success'),
     path('load-more/', views.load_more_testimonials,
          name='load_more_testimonials'),
