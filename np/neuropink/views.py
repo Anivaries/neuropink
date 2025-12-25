@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.core.mail import mail_admins
 from django.http import JsonResponse
 from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 
 from .models import Order, Testimonials
 from .forms import OrderForm, TestimonialForm
@@ -87,6 +89,105 @@ def calculate_price(quantity):
     return TRI_KUTIJE + BASE_CENA * (quantity - 3)
 
 
+def email_order(order):
+
+    subject = 'Porudžbina'
+    from_email = settings.SERVER_EMAIL
+    to = [email for _, email in settings.ADMINS]
+
+    order_first_name = order.first_name
+    order_last_name = order.last_name
+    order_address = order.address
+    order_city = order.city
+    order_postal_code = order.postal_code
+    order_phone = order.phone
+    order_email = order.email
+    order_note = order.note
+    order_quantity = order.quantity
+    order_total_price = order.total_price
+    order_created_at = order.created_at
+    order_number = order.order_number
+    text_body = f"""
+    Ime i prezime: {order_first_name} {order_last_name}
+    Telefon: {order_phone}
+    """
+
+    html_body = f"""
+    <h2>Nova porudžbina — Neuropink</h2>
+
+    <h3>Kupac</h3>
+    <p>
+    <strong>Ime i prezime:</strong> {order_first_name} {order_last_name}<br>
+    <strong>Telefon:</strong> {order_phone}<br>
+    <strong>Email:</strong> {order_email or '/'}
+    </p>
+
+    <h3>Adresa isporuke</h3>
+    <p>
+    {order_address}<br>
+    {order_city} {order_postal_code}
+    </p>
+
+    <h3>Porudžbina</h3>
+    <p>
+    <strong>Količina:</strong> {order_quantity}<br>
+    <strong>Cena ukupno:</strong> {order_total_price} RSD
+    </p>
+
+    <h3>Poruka kupca</h3>
+    <p>
+    {order_note or '/'}
+    </p>
+
+    <hr>
+
+    <p style="font-size: 12px; color: #555;">
+    <strong>Broj porudžbine:</strong> {order_number}<br>
+    <strong>Kreirano:</strong> {order_created_at}
+    </p>
+    """
+
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=text_body,
+        from_email=from_email,
+        to=to,
+    )
+    email.attach_alternative(html_body, "text/html")
+    email.send()
+
+    # body = f"""
+    #         NEUROPINK — NOVA PORUDŽBINA
+    #         =========================
+
+    #         Kupac
+    #         -----
+    #         Ime i prezime : {order_first_name} {order_last_name}
+    #         Telefon: {order_phone}
+    #         Email: {order_email or '/'}
+
+    #         Adresa isporuke
+    #         ---------------
+    #         {order_address}
+    #         {order_city} {order_postal_code}
+
+    #         Porudžbina
+    #         ----------
+    #         Količina: {order_quantity}
+    #         Cena ukupno: {order_total_price} RSD
+
+    #         Poruka kupca
+    #         ------------
+    #         {order_note or '/'}
+
+    #         Ostale informacije
+    #         ------------------
+    #         Broj porudžbine: {order_number}
+    #         Kreirano: {order_created_at.strftime('%d.%m.%Y %H:%M')}
+    #         """
+    # mail_admins(subject='Porudzbina', message=body, )
+
+
 def order_view(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -99,7 +200,7 @@ def order_view(request):
             order.total_price = total_price
             order.order_number = generate_order_number()
             order.save()
-            mail_admins(subject='Narudzba', message='XXXXX narucio')
+            email_order(order)
             return redirect('order_success', order_number=order.order_number)
     else:
         form = OrderForm()

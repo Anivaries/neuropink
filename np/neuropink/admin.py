@@ -25,8 +25,9 @@ class OrderAdmin(admin.ModelAdmin):
         'quantity',
         'total_price',
         'created_at',
+        'completed',
     )
-    list_filter = ('city', 'created_at')
+    list_filter = ('city', 'created_at', 'completed')
     search_fields = ('order_number', 'first_name',
                      'last_name', 'phone', 'email')
     readonly_fields = ('order_number', 'total_price', 'created_at')

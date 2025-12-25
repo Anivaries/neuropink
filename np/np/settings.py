@@ -20,7 +20,16 @@ ALLOWED_HOSTS = ['neuropink.rs', 'www.neuropink.rs']
 ADMINS = [('Marko', 'k0m4r4c00@gmail.com'),
           ('Saša', 'sasamilosevic.1992@gmail.com')]
 # Application definition
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zeptomail.eu'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'emailapikey'
+EMAIL_HOST_PASSWORD = 'yA6KbHtYvVqkxzhQSRNs1JfepdxjpaA+iSq34CvrKcZyftaziKE91Rtqcdroc2GI0IHX5KlTbd1Cdtq6uN5efsY8MdRZKZTGTuv4P2uV48xh8ciEYNYhhpuqAbkRGqRLdxgtCyg1Q/AlWA== '
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Neuropink - '
+SERVER_EMAIL = 'neuropink.rs <noreply@neuropink.rs>'
+DEFAULT_FROM_EMAIL = 'neuropink.rs <noreply@neuropink.rs>'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
