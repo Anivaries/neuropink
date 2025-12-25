@@ -202,7 +202,7 @@ def order_view(request):
             order.order_number = generate_order_number()
             order.completed_order_by_user = True
             order.save()
-            # email_order(order)
+            email_order(order)
             return redirect('order_success', token=order.access_token)
     else:
         form = OrderForm()
