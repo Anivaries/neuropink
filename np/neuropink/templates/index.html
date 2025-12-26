@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}NeuroPink - Gel protiv bolova u mišićima, zglobovima i upaljene tetive{% endblock title %}
+
 {% load static %}
 {% load conv_int %}
 {% block style %}
@@ -664,6 +665,20 @@
             h1 {
                 font-size: 2.5rem;
             }
+            .promo-heading-top{
+                font-family: "Milker";
+                font-weight: 500;
+                text-align: center;
+                background: linear-gradient(90deg, #333, #333, #333);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+                position: relative;
+                font-size:2rem;
+            }
+            .card-body{
+                padding:3px;
+            }
 
             .subtitle {
                 font-size: 1.2rem;
@@ -791,7 +806,55 @@
                 </div>
             </div>
         </div>
+    <div class="container">
+        <h2 class="promo-heading-top mb-4">Iskoristite akcijsku cenu odmah!!!!!</h2>
     </div>
+    <div class="container boxes-valty" style="padding:0;">
+        <div class="row mb-4 align-items-center">
+            <div class="col-6 d-flex justify-content-end">
+                <span class="display-6 fw-bold">1 KUTIJA</span>
+            </div>
+            <div class="col-6 d-flex flex-column align-items-start">
+                <span class="tilted-line display-6 text-dark">1500</span>
+                <span class="fs-5 fw-bold cena-pulse">1000 DINARA</span>
+            </div>
+        </div>
+        <div class="row mb-4 align-items-center">
+            <div class="col-6 d-flex justify-content-end">
+                <span class="display-6 fw-bold">2 KUTIJE</span>
+            </div>
+            <div class="col-6 d-flex flex-column align-items-start">
+                <span class="tilted-line display-6 text-dark">3000</span>
+                <span class="fs-5 fw-bold cena-pulse">1800 DINARA</span>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-6 d-flex justify-content-end">
+                <span class="display-6 fw-bold">3 KUTIJE</span>
+            </div>
+            <div class="col-6 d-flex flex-column align-items-start">
+                <span class="tilted-line display-6 text-dark">4500</span>
+                <span class="fs-5 fw-bold cena-pulse">2400 DINARA</span>
+            </div>
+        </div>
+        <div class="row align-items-center pb-3">
+            <div class="col-12 d-flex justify-content-center">
+                <span class="display-7 text-black" style="letter-spacing:2px;">*Svaka naredna kutija košta 800 DIN</span>
+            </div>
+        </div>
+        
+    </div>
+    <div class="container my-3 text-center" style="padding:1rem!important;">
+        <div class="d-flex align-items-start justify-content-center">
+            <i class="fa-solid fa-truck fa-2x me-3 text-dark"></i>
+            <div class="boxes-valty">
+                <h3 class="mb-1">BESPLATNA POŠTARINA</h3>
+                <p class="mb-0 text-white fw-bold" style="letter-spacing: 3px;">SLANJE KAO CC PAKET</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    
 </section>
 
 {% comment %} <section class="hero-section">
@@ -1016,11 +1079,12 @@
     </div>
     
 </div>
-<div class="row justify-content-center">
-    <div class="col-lg-7">
+<div class="container">
+<div class="row justify-content-center" style="padding-bottom:5rem;">
+    {% comment %} <div class="col-lg-2"> {% endcomment %}
         <div class="card your-testimonial shadow-sm" style="transform: none !important;">
             <div class="card-header bg-primary text-white fw-bold">Vaša recenzija</div>
-                <div class="card-body p-4">
+                <div class="card-body p-2">
                     <form method="post" action="">
                         {% csrf_token %}
                         
@@ -1095,11 +1159,18 @@
                 </div>
             </div>
         </div>
-    </div>
+    {% comment %} </div> {% endcomment %}
 </div>
+</div>
+
+<a href="{% url 'order' %}" class="floating-btn">
+        <button class="btn btn-custom btn-lg w-100 w-md-auto">
+            <i class="fas fa-shopping-cart"></i> Poručite sada
+        </button>
+    </a>
 </section>
 
-<section class="cta-section">
+{% comment %} <section class="cta-section">
     <div class="container">
         <h2 class="promo-heading mb-4">Iskoristite akcijsku cenu odmah!!!!!</h2>
     </div>
@@ -1133,15 +1204,11 @@
         </div>
         <div class="row align-items-center pb-3">
             <div class="col-12 d-flex justify-content-center">
-                <span class="display-11 text-black" style="letter-spacing:2px;">*Svaka naredna kutija košta 800 DIN</span>
+                <span class="display-7 text-black" style="letter-spacing:2px;">*Svaka naredna kutija košta 800 DIN</span>
             </div>
         </div>
     </div>
-    <a href="{% url 'order' %}" class="floating-btn">
-        <button class="btn btn-custom btn-lg w-100 w-md-auto">
-            <i class="fas fa-shopping-cart"></i> Poručite sada
-        </button>
-    </a>
+    
     <div class="container my-3 pb-4 text-center">
         <div class="d-flex align-items-start justify-content-center">
             <i class="fa-solid fa-truck fa-2x me-3 text-dark"></i>
@@ -1151,10 +1218,22 @@
             </div>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
 {% endblock index %}
 {% block script %}
-
+<script>
+    const floatingBtn = document.querySelector('.floating-btn');
+    
+    floatingBtn.style.display = 'none';
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            floatingBtn.style.display = 'block';
+        } else {
+            floatingBtn.style.display = 'none';
+        }
+    });
+</script>
 <script>
 let offset = {{ testimonials|length }};
 const limit = 10;
