@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Hvala na Vašoj porudžbini!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f7;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333333;
+      text-align: center;
+    }
+    p {
+      font-size: 16px;
+      color: #555555;
+      line-height: 1.5;
+    }
+    .order-details {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+    .order-details h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .order-details p {
+      margin: 5px 0;
+    }
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #888888;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hvala na Vašoj porudžbini!</h1>
+    <p>Zdravo <strong>{{ first_name }}</strong>,</p>
+    <p>Primili smo Vašu porudžbinu i trenutno je obrađujemo. Ovo su detalji Vaše kupovine:</p>
+
+    <div class="order-details">
+      <h2>Porudžbina #{{ order_number }}</h2>
+      <p><strong>Ime i prezime:</strong> {{ first_name }} {{ last_name }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+      <p><strong>Telefon:</strong> {{ phone }}</p>
+      <p><strong>Adresa:</strong> {{ address }}, {{ city }}, ZIP: {{ postal_code }}</p>
+      <p><strong>Količina:</strong> {{ quantity }}</p>
+      <p><strong>Ukupna cena:</strong> {{ total_price }} RSD</p>
+      {% if note %}
+      <p><strong>Poruka:</strong> {{ note }}</p>
+      {% endif %}
+    </div>
+
+    <p>Hvala što kupujete kod nas! Ako imate bilo kakvih pitanja, slobodno odgovorite na ovaj email.</p>
+
+    <div class="footer">
+      &copy; {{ current_year }} Neuropink. Sva prava zadržana.
+    </div>
+  </div>
+</body>
+</html>

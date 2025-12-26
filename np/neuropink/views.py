@@ -6,6 +6,9 @@ from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils import timezone
 
 from .models import Order, Testimonials
 from .forms import OrderForm, TestimonialForm
@@ -48,10 +51,12 @@ def index(request):
             ime = form.cleaned_data['first_name']
             prezime = form.cleaned_data['last_name']
             review = form.cleaned_data['review']
+            rating = form.cleaned_data['rating']
             Testimonials.objects.create(
                 first_name=ime,
                 last_name=prezime,
-                review=review
+                review=review,
+                rating=rating
             )
             return render(request, 'testimonial_success.html')
     else:
@@ -189,6 +194,31 @@ def email_order(order):
     # mail_admins(subject='Porudzbina', message=body, )
 
 
+def email_customer(order):
+    subject = 'Hvala na porudžbini!'
+    html_content = render_to_string('emails/order_confirmation.html', {
+        'first_name': order.first_name,
+        'last_name': order.last_name,
+        'email': order.email,
+        'phone': order.phone,
+        'address': order.address,
+        'city': order.city,
+        'postal_code': order.postal_code,
+        'quantity': order.quantity,
+        'total_price': order.total_price,
+        'order_number': order.order_number,
+        'note': order.note,
+        'created_at': order.created_at.strftime('%d.%m.%Y %H:%M'),
+        'current_year': timezone.now().year
+    })
+    text_content = strip_tags(html_content)
+
+    email = EmailMultiAlternatives(
+        subject, text_content, 'noreply@neuropink.rs', [order.email])
+    email.attach_alternative(html_content, "text/html")
+    email.send()
+
+
 def order_view(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -203,6 +233,8 @@ def order_view(request):
             order.completed_order_by_user = True
             order.save()
             email_order(order)
+            # if order.email:
+            #     email_customer(order)
             return redirect('order_success', token=order.access_token)
     else:
         form = OrderForm()

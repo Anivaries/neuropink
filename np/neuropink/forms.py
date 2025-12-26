@@ -27,9 +27,19 @@ class OrderForm(forms.ModelForm):
 class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testimonials
-        fields = ['first_name', 'last_name', 'review']
+        fields = ['first_name', 'last_name', 'review', 'rating']
         labels = {
             'first_name': 'Ime',
             'last_name': 'Prezime',
             'review': 'Vaša recenzija',
+            'rating': 'Ocena',
+        }
+        widgets = {
+            'rating': forms.RadioSelect(choices=[
+                (5, '5'),
+                (4, '4'),
+                (3, '3'),
+                (2, '2'),
+                (1, '1'),
+            ]),
         }
