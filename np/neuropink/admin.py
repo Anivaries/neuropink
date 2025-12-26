@@ -26,8 +26,9 @@ class OrderAdmin(admin.ModelAdmin):
         'total_price',
         'created_at',
         'completed',
+        'poslato',
     )
-    list_filter = ('city', 'created_at', 'completed')
+    list_filter = ('city', 'created_at', 'completed', 'poslato')
     search_fields = ('order_number', 'first_name',
                      'last_name', 'phone', 'email')
     readonly_fields = ('order_number', 'total_price', 'created_at')
@@ -43,6 +44,6 @@ class OrderAdmin(admin.ModelAdmin):
             "fields": ("address", "city", "postal_code")
         }),
         ("Order Details", {
-            "fields": ("quantity", "total_price", "note", "completed")
+            "fields": ("quantity", "total_price", "note", "completed", "poslato")
         }),
     )
