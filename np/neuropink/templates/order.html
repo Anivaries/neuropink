@@ -462,4 +462,24 @@
 
     updateTotal();
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const quantity = urlParams.get('quantity');
+    
+    if (quantity) {
+        const quantitySelect = document.getElementById('quantity');
+        if (quantitySelect) {
+            quantitySelect.value = quantity;
+        }
+        
+        const quantityRadio = document.querySelector(`input[name="quantity"][value="${quantity}"]`);
+        if (quantityRadio) {
+            quantityRadio.checked = true;
+        }
+        
+        updateTotal(quantity);
+    }
+});
+</script>
 {% endblock script %}
