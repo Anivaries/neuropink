@@ -2,3 +2,7 @@ venv
 # Python cache files
 __pycache__/
 *.pyc
+db.sqlite3
+neuropink.log
+*venv/
+*.pyc
