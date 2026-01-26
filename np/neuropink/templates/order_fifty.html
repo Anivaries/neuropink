@@ -1,0 +1,545 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Naručivanje - NeuroPink{% endblock title %}
+{% block style %}
+<style>
+    
+    
+    main {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--pink-light) 0%, #ffffff 100%);
+        min-height: 100vh;
+        padding-top:20px;
+    }
+    
+    .order-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .header h1 {
+        color: var(--pink-accent);
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .header .subtitle {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(255, 77, 148, 0.15);
+        background: white;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, var(--pink-dark) 0%, var(--pink-accent) 100%);
+        color: white;
+        padding: 25px;
+        border: none;
+    }
+    
+    .card-header h3 {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .modal-header{
+        background: var(--pink-accent);
+    }
+    .btn-zatvori{
+        background: var(--pink-dark);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+    
+    .form-label .required {
+        color: var(--pink-accent);
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid var(--pink-light);
+        border-radius: 8px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--pink-accent);
+        box-shadow: 0 0 0 0.2rem rgba(255, 77, 148, 0.25);
+    }
+    
+    .product-summary {
+        background: var(--pink-light);
+        border-radius: 12px;
+        padding: 25px;
+    }
+    
+    .product-summary h4 {
+        color: var(--pink-accent);
+    }
+    
+    .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 2px dashed var(--pink-medium);
+    }
+    
+    .product-item:last-child {
+        border-bottom: none;
+    }
+    
+    .quantity-selector {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .quantity-btn {
+        width: 35px;
+        height: 35px;
+        border: 2px solid var(--pink-accent);
+        background: white;
+        color: var(--pink-accent);
+        border-radius: 50%;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .quantity-btn:hover {
+        background: var(--pink-accent);
+        color: white;
+    }
+    
+    .quantity-input {
+        width: 60px;
+        text-align: center;
+        border: 2px solid var(--pink-light);
+        border-radius: 8px;
+        padding: 5px;
+        font-weight: bold;
+    }
+    
+    .total-section {
+        background: linear-gradient(135deg, var(--pink-accent) 0%, var(--pink-dark) 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 20px;
+    }
+    
+    .total-section .total-label {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    
+    .total-section .total-price {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    
+    .payment-info {
+        background: #fff8e1;
+        border-left: 4px solid #ffc107;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    
+    .payment-info i {
+        color: #ffc107;
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(135deg, var(--pink-accent) 0%, var(--pink-dark) 100%);
+        color: white;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 30px;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 77, 148, 0.4);
+    }
+    
+    .delivery-info {
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    
+    .delivery-info i {
+        color: #2196f3;
+        margin-right: 10px;
+    }
+    
+    .back-link {
+        display: inline-block;
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+        color: var(--pink-dark);
+        transform: translateX(-5px);
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 0;
+        }
+        
+        .product-item {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock style %}
+{% block order %}
+<div class="container order-container">
+    <a href="{% url 'index' %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Nazad na proizvod
+    </a>
+    
+    <div class="header">
+        <h1><i class="fas fa-shopping-cart"></i> Naručivanje</h1>
+        <p class="subtitle">Popunite formu i poručite NeuroPink gel</p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" id="orderForm">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-7 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user"></i> Vaši podaci</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_first_name" class="form-label">
+                                    Ime <span class="required">*</span>
+                                </label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_last_name" class="form-label">
+                                    Prezime <span class="required">*</span>
+                                </label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_address" class="form-label">
+                                Adresa <span class="required">*</span>
+                            </label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="text-danger small mt-1">{{ form.address.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_city" class="form-label">
+                                    Grad <span class="required">*</span>
+                                </label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="text-danger small mt-1">{{ form.city.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_postal_code" class="form-label">
+                                    Poštanski broj <span class="required">*</span>
+                                </label>
+                                {{ form.postal_code }}
+                                {% if form.postal_code.errors %}
+                                    <div class="text-danger small mt-1">{{ form.postal_code.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_phone" class="form-label">
+                                Broj telefona <span class="required">*</span>
+                            </label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">
+                                Email adresa
+                            </label>
+                            {{ form.email }}
+                            <small class="text-muted">Opcionalno - za potvrdu narudžbine</small>
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_note" class="form-label">
+                                Napomena
+                            </label>
+                            {{ form.note }}
+                            {% if form.note.errors %}
+                                <div class="text-danger small mt-1">{{ form.note.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <input type="hidden" name="quantity" id="id_quantity" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-box"></i> Vaša narudžbina</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="product-summary">
+                            <h4>NeuroPink Gel</h4>
+                            <div class="product-item">
+                                {% comment %} <div> {% endcomment %}
+                                    <strong style="color: var(--pink-accent);padding:0px;" >Jedna kutija = 50g</strong><br>
+                                {% comment %} </div> {% endcomment %}
+                                {% comment %} <div class="text-end">
+                                    <strong style="color: var(--pink-accent); font-size: 1.2rem;">{{JEDNA_KUTIJA}},00 RSD</strong>
+                                </div> {% endcomment %}
+                            </div>
+                            <div class="product-item">
+                                <div>
+                                    <strong>Količina</strong>
+                                </div>
+                                <div class="quantity-selector">
+                                    <button type="button" class="quantity-btn" onclick="decreaseQuantity()">−</button>
+                                    <input type="number" class="quantity-input" id="quantity" value="1" min="1" readonly>
+                                    <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                                </div>
+                            </div>
+                            <div class="product-item">
+                                <div>
+                                    {% comment %} <strong>Dostava</strong> {% endcomment %}
+                                    <strong></strong>
+                                </div>
+                                <div class="text-end">
+                                    {% comment %} <strong>250 RSD</strong> {% endcomment %}
+                                    <strong></strong>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="total-section">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="total-label">UKUPNO:</span>
+                                <span class="total-price" id="totalPrice"></span>
+                            </div>
+                        </div>
+
+                        {% comment %} <div class="payment-info mt-4">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <div>
+                                    <strong>Plaćanje pouzećem</strong>
+                                    <p class="mb-0 mt-2">Plaćate kuriru prilikom preuzimanja paketa</p>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+
+                        {% comment %} <div class="delivery-info">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-truck"></i>
+                                <div>
+                                    <strong>Dostava poštom</strong>
+                                    <p class="mb-0 mt-2">Rok isporuke: 2-4 radna dana</p>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-check-circle"></i> Potvrdi narudžbinu
+                        </button>
+
+                        <p class="text-center text-muted mt-3 mb-0" style="font-size: 0.9rem;">
+                            Klikom na dugme potvrđujete narudžbinu
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-side modal-top-right"> <div class="modal-content">
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Artikal nije na stanju!</h5>
+        <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <p id="modalMessage"></p>
+        {% comment %}<hr>
+        <p><strong>Access Token:</strong> <span id="modalToken" class="badge bg-light text-dark"></span></p> {% endcomment %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-zatvori" data-mdb-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock order %}
+{% block script %}
+<script>
+    const CENA_VISE_KUTIJA = {{BASE_CENA}};
+    const JEDNA_KUTIJA = {{JEDNA_KUTIJA}};
+    const DVE_KUTIJE = {{DVE_KUTIJE}};
+    const TRI_KUTIJE = {{TRI_KUTIJE}};
+
+    function calculateTotal(quantity) {
+        if (quantity === 1) {
+            return JEDNA_KUTIJA;
+        } else if (quantity === 2) {
+            return DVE_KUTIJE;
+        } else if (quantity === 3) {
+            return TRI_KUTIJE;
+        } else {
+            return TRI_KUTIJE + (CENA_VISE_KUTIJA * (quantity - 3));
+        }
+    }
+
+    function updateTotal() {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const total = calculateTotal(quantity);
+
+        document.getElementById('totalPrice').textContent =
+            total.toLocaleString('sr-RS') + ' RSD';
+
+        // Ensure form field gets synced
+        document.getElementById('id_quantity').value = quantity;
+    }
+
+    function increaseQuantity() {
+        const input = document.getElementById('quantity');
+        input.value = parseInt(input.value) + 1;
+        updateTotal();
+    }
+
+    function decreaseQuantity() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+            updateTotal();
+        }
+    }
+
+    updateTotal();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const quantity = urlParams.get('quantity');
+    
+    if (quantity) {
+        const quantitySelect = document.getElementById('quantity');
+        if (quantitySelect) {
+            quantitySelect.value = quantity;
+        }
+        
+        const quantityRadio = document.querySelector(`input[name="quantity"][value="${quantity}"]`);
+        if (quantityRadio) {
+            quantityRadio.checked = true;
+        }
+        
+        updateTotal(quantity);
+    }
+});
+</script>
+<script>
+const modalElement = document.getElementById('successModal');
+const mdbModal = new mdb.Modal(modalElement);
+
+const orderForm = document.getElementById('orderForm');
+
+orderForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch("{% url 'order-fifty' %}", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}" // Direct Django template tag
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Inject data into MDB Modal
+            document.getElementById('modalMessage').innerText = data.message;
+            //document.getElementById('modalToken').innerText = data.token;
+            
+            // Trigger the MDB Modal
+            mdbModal.show();
+        } else {
+            // Handle validation errors or server issues
+            console.error("Submission failed");
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock script %}

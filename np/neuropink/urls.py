@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path('order/', views.order_view, name='order'),
+    path('order-50/', views.order_view_fifty_grams, name='order-fifty'),
     # path('order/<int:order_number>', views.order_success, name='order_success'),
     path("order/<uuid:token>/", views.order_success, name="order_success"),
     path('testimonial/', views.testimonial_success, name='testimonial_success'),

@@ -10,10 +10,15 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils import timezone
 
-from .models import Order, Testimonials
-from .forms import OrderForm, TestimonialForm
+from .models import Order, OrderFifty, Testimonials
+from .forms import OrderForm, OrderFiftyForm, TestimonialForm
 
 import random
+
+BASE_CENA_50 = 500
+JEDNA_KUTIJA_50 = 500
+DVE_KUTIJE_50 = 900
+TRI_KUTIJE_50 = 1200
 
 BASE_CENA = 800
 JEDNA_KUTIJA = 1000
@@ -93,6 +98,16 @@ def calculate_price(quantity):
     elif quantity == 3:
         return TRI_KUTIJE
     return TRI_KUTIJE + BASE_CENA * (quantity - 3)
+
+
+def calculate_price_fifty(quantity):
+    if quantity == 1:
+        return JEDNA_KUTIJA_50
+    elif quantity == 2:
+        return DVE_KUTIJE_50
+    elif quantity == 3:
+        return TRI_KUTIJE_50
+    return TRI_KUTIJE + BASE_CENA_50 * (quantity - 3)
 
 
 def email_order(order):
@@ -194,6 +209,74 @@ def email_order(order):
     # mail_admins(subject='Porudzbina', message=body, )
 
 
+def email_order_fifty(order):
+
+    subject = 'Porudžbina od 50g - NIJE AKTIVNA PORUDZBINA'
+    from_email = settings.SERVER_EMAIL
+    to = [email for _, email in settings.ADMINS]
+
+    order_first_name = order.first_name
+    order_last_name = order.last_name
+    order_address = order.address
+    order_city = order.city
+    order_postal_code = order.postal_code
+    order_phone = order.phone
+    order_email = order.email
+    order_note = order.note
+    order_quantity = order.quantity
+    order_total_price = order.total_price
+    order_created_at = order.created_at
+    order_number = order.order_number
+    text_body = f"""
+    Ime i prezime: {order_first_name} {order_last_name}
+    Telefon: {order_phone}
+    """
+
+    html_body = f"""
+    <h2>OVO JE PORUDZBINA OD 50 GRAMA. NIJE AKTIVNA PORUDZBINA, SAMO ZA SAKUPLJANJE PODATAKA</h2>
+
+    <h3>Kupac</h3>
+    <p>
+    <strong>Ime i prezime:</strong> {order_first_name} {order_last_name}<br>
+    <strong>Telefon:</strong> {order_phone}<br>
+    <strong>Email:</strong> {order_email or '/'}
+    </p>
+
+    <h3>Adresa isporuke</h3>
+    <p>
+    {order_address}<br>
+    {order_city} {order_postal_code}
+    </p>
+
+    <h3>Porudžbina</h3>
+    <p>
+    <strong>Količina:</strong> {order_quantity}<br>
+    <strong>Cena ukupno:</strong> {order_total_price} RSD
+    </p>
+
+    <h3>Poruka kupca</h3>
+    <p>
+    {order_note or '/'}
+    </p>
+
+    <hr>
+
+    <p style="font-size: 12px; color: #555;">
+    <strong>Broj porudžbine:</strong> {order_number}<br>
+    <strong>Kreirano:</strong> {order_created_at}
+    </p>
+    """
+
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=text_body,
+        from_email=from_email,
+        to=to,
+    )
+    email.attach_alternative(html_body, "text/html")
+    email.send()
+
+
 def email_customer(order):
     subject = 'Hvala na porudžbini!'
     html_content = render_to_string('emails/order_confirmation.html', {
@@ -240,6 +323,32 @@ def order_view(request):
         form = OrderForm()
 
     return render(request, 'order.html', {'form': form, 'BASE_CENA': BASE_CENA, 'JEDNA_KUTIJA': JEDNA_KUTIJA, 'DVE_KUTIJE': DVE_KUTIJE, 'TRI_KUTIJE': TRI_KUTIJE})
+
+
+def order_view_fifty_grams(request):
+    if request.method == 'POST':
+        form = OrderFiftyForm(request.POST)
+        if form.is_valid():
+            quantity = max(1, form.cleaned_data['quantity'])
+            total_price = calculate_price_fifty(quantity)
+
+            order = form.save(commit=False)
+            order.quantity = quantity
+            order.total_price = total_price
+            order.order_number = generate_order_number()
+            order.completed_order_by_user = True
+            order.save()
+            email_order_fifty(order)
+            # if order.email:
+            #     email_customer(order)
+            return JsonResponse({
+                "success": True,
+                "message": "Ovaj artikal trenutno nije na stanju!",
+            })
+    else:
+        form = OrderFiftyForm()
+
+    return render(request, 'order_fifty.html', {'form': form, 'BASE_CENA': BASE_CENA_50, 'JEDNA_KUTIJA': JEDNA_KUTIJA_50, 'DVE_KUTIJE': DVE_KUTIJE_50, 'TRI_KUTIJE': TRI_KUTIJE_50})
 
 
 def order_success(request, token):

@@ -1175,9 +1175,94 @@
         </div>
         <div class="container py-5">
     <h2 class="text-center mb-5 fw-bold" style="font-size: 2.5rem; color: var(--pink-accent);">
-        Izaberite Svoju Ponudu
+        Izaberite Svoju Ponudu - <span style="color:#ff84b6;">100g</span>
     </h2>
-    
+    <!-- 100g -->
+    <div class="row g-4 justify-content-center">
+        <!-- 1 Box -->
+        <div class="col-md-4">
+            <div class="pricing-card h-100">
+                 <div class="pricing-image">
+                    <img class="img-fluid" src="{% static 'product/1.png' %}" alt="1 kutija">
+                </div>
+                
+                <div class="pricing-header">
+                    <h3 class="package-name">STARTER</h3>
+                    <div class="package-quantity">1 KUTIJA</div>
+                    <div class="muted">100g</div>
+                </div>
+                <div class="pricing-body">
+                    <div class="old-price">1500 DIN</div>
+                    <div class="current-price">900<span class="currency">DIN</span></div>
+                    {% comment %} <div class="price-per-box">900 DIN / kutija</div> {% endcomment %}
+                </div>
+                <a href="/order/?quantity=1" class="btn-buy-now">
+                    Poručite Sada
+                </a>
+            </div>
+        </div>
+
+        <!-- 2 Boxes -->
+        <div class="col-md-4">
+            <div class="pricing-card h-100 popular">
+                <div class="pricing-image">
+                    <img class="img-fluid" src="{% static 'product/2.png' %}" alt="2 kutije">
+                </div>
+                <div class="badge-popular">POPULARNO</div>
+                <div class="pricing-header">
+                    <h3 class="package-name">STANDARD</h3>
+                    <div class="package-quantity">2 KUTIJE</div>
+                    <div class="muted">2 x 100g</div>
+                </div>
+                <div class="pricing-body">
+                    <div class="old-price">3000 DIN</div>
+                    <div class="current-price">1600<span class="currency">DIN</span></div>
+                    <div class="price-per-box">800 DIN / kutija</div>
+                    {% comment %} <div class="savings">Ušteda: 1200 DIN</div> {% endcomment %}
+                </div>
+                <a href="/order/?quantity=2" class="btn-buy-now">
+                    Poručite Sada
+                    <span class="savings-inline">Ušteda: 1400 DIN</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3 Boxes - Best Deal -->
+        <div class="col-md-4">
+            <div class="pricing-card h-100 best-deal">
+                <div class="pricing-image">
+                    <img class="img-fluid" src="{% static 'product/3.png' %}" alt="3 kutije">
+                </div>
+                <div class="badge-best">NAJBOLJA PONUDA</div>
+                <div class="pricing-header">
+                    <h3 class="package-name">PREMIUM</h3>
+                    <div class="package-quantity">3 KUTIJE</div>
+                    <div class="muted">3 x 100g</div>
+                </div>
+                <div class="pricing-body">
+                    <div class="old-price">4500 DIN</div>
+                    <div class="current-price">2100<span class="currency">DIN</span></div>
+                    <div class="price-per-box">700 DIN / kutija</div>
+                    {% comment %} <div class="savings">Ušteda: 2100 DIN</div> {% endcomment %}
+                </div>
+                <a href="/order/?quantity=3" class="btn-buy-now">
+                    Poručite Sada
+                    <span class="savings-inline">Ušteda: 2400 DIN</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <p class="text-muted fst-italic" style="color: rgb(249 249 249 / 75%) !important;">*Svaka naredna kutija košta 700 DIN</p>
+        
+    </div>
+    <!-- !100g -->
+    <div class='p-5'></div>
+    <!-- 50g -->
+    <h2 class="text-center mb-5 fw-bold" style="font-size: 2.5rem; color: var(--pink-accent);">
+        Izaberite Svoju Ponudu - <span style="color:#ff84b6;">50g</span>
+    </h2>
     <div class="row g-4 justify-content-center">
         <!-- 1 Box -->
         <div class="col-md-4">
@@ -1189,13 +1274,14 @@
                 <div class="pricing-header">
                     <h3 class="package-name">STARTER</h3>
                     <div class="package-quantity">1 KUTIJA</div>
+                    <div class="muted">50g</div>
                 </div>
                 <div class="pricing-body">
-                    <div class="old-price">1500 DIN</div>
-                    <div class="current-price">1000<span class="currency">DIN</span></div>
-                    <div class="price-per-box">1000 DIN / kutija</div>
+                    {% comment %} <div class="old-price">1500 DIN</div> {% endcomment %}
+                    <div class="current-price">500<span class="currency">DIN</span></div>
+                    <div class="price-per-box" style="visibility:hidden;">500 DIN / kutija</div>
                 </div>
-                <a href="/order/?quantity=1" class="btn-buy-now">
+                <a href="/order-50/?quantity=1" class="btn-buy-now">
                     Poručite Sada
                 </a>
             </div>
@@ -1211,16 +1297,17 @@
                 <div class="pricing-header">
                     <h3 class="package-name">STANDARD</h3>
                     <div class="package-quantity">2 KUTIJE</div>
+                    <div class="muted">2 x 50g</div>
                 </div>
                 <div class="pricing-body">
-                    <div class="old-price">3000 DIN</div>
-                    <div class="current-price">1800<span class="currency">DIN</span></div>
-                    <div class="price-per-box">900 DIN / kutija</div>
+                    {% comment %} <div class="old-price">3000 DIN</div> {% endcomment %}
+                    <div class="current-price">900<span class="currency">DIN</span></div>
+                    <div class="price-per-box">450 DIN / kutija</div>
                     {% comment %} <div class="savings">Ušteda: 1200 DIN</div> {% endcomment %}
                 </div>
-                <a href="/order/?quantity=2" class="btn-buy-now">
+                <a href="/order-50/?quantity=2" class="btn-buy-now">
                     Poručite Sada
-                    <span class="savings-inline">Ušteda: 1200 DIN</span>
+                    {% comment %} <span class="savings-inline">Ušteda: 1200 DIN</span> {% endcomment %}
                 </a>
             </div>
         </div>
@@ -1235,25 +1322,27 @@
                 <div class="pricing-header">
                     <h3 class="package-name">PREMIUM</h3>
                     <div class="package-quantity">3 KUTIJE</div>
+                    <div class="muted">3 x 50g</div>
                 </div>
                 <div class="pricing-body">
-                    <div class="old-price">4500 DIN</div>
-                    <div class="current-price">2400<span class="currency">DIN</span></div>
-                    <div class="price-per-box">800 DIN / kutija</div>
+                    {% comment %} <div class="old-price">4500 DIN</div> {% endcomment %}
+                    <div class="current-price">1200<span class="currency">DIN</span></div>
+                    <div class="price-per-box">400 DIN / kutija</div>
                     {% comment %} <div class="savings">Ušteda: 2100 DIN</div> {% endcomment %}
                 </div>
-                <a href="/order/?quantity=3" class="btn-buy-now">
+                <a href="/order-50/?quantity=3" class="btn-buy-now">
                     Poručite Sada
-                    <span class="savings-inline">Ušteda: 2100 DIN</span>
+                    {% comment %} <span class="savings-inline">Ušteda: 2100 DIN</span> {% endcomment %}
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="text-center mt-4">
+    {% comment %} <div class="text-center mt-4">
         <p class="text-muted fst-italic">*Svaka naredna kutija košta 800 DIN</p>
         
-    </div>
+    </div> {% endcomment %}
+    <!-- !50g -->
 
     <!-- Shipping Info -->
     <div class="shipping-banner mt-5">
