@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Naručivanje - NeuroPink{% endblock title %}
+{% block fb_order %}
+fbq('track', 'AddToCart');
+{% endblock fb_order %}
 {% block style %}
 <style>
     
