@@ -92,7 +92,13 @@
 </style>
 {% endblock style %}
 {% block fb_purchase %}
-fbq('track', 'Purchase', {value: 1000.00, currency: 'RSD'});
+if (window.fbq) {
+  fbq('track', 'Purchase', {
+    value: 1000.00,
+    currency: 'RSD',
+    event_id: 'order_{{ order_number }}'
+  });
+}
 {% endblock fb_purchase %}
 {% block order_success %}
 <div class="success-card">
