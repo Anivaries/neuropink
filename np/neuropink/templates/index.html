@@ -1154,13 +1154,19 @@
                 </div>
                 </div>
                 <div class="cta-buttons justify-content-center">
-                    <a href="{% url 'order' %}" class="btn btn-primary">
+                    <a href="{% url 'order' %}" class="btn btn-primary" id="addToCart">
                         <i class="fas fa-shopping-cart"></i>
                         Iskoristite akciju
                     </a>
                 </div>
                 <div class="container">
-
+                <script>
+                    document.getElementById('addToCart')?.addEventListener('click', function (){
+                        if (window.fbq){
+                            fbq('track', 'AddToCart', {value: 900,000, currency: 'RSD'})
+                        }
+                    });
+                </script>
                 
                 <div class="trust-badge justify-content-center d-inline-block">
                     
