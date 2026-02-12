@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Naručivanje - NeuroPink{% endblock title %}
 {% block fb_order %}
-fbq('track', 'AddToCart');
+{% comment %} fbq('track', 'AddToCart'); {% endcomment %}
 {% endblock fb_order %}
 {% block style %}
 <style>
